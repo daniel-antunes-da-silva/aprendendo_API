@@ -3,6 +3,7 @@ from estrutura_banco_de_dados import Autor, Postagem, app, db
 import json
 from datetime import datetime, timedelta
 from functools import wraps
+import os
 import jwt
 
 # Criando token para sempre que precisar proteger alguma requisição.
@@ -193,4 +194,5 @@ def excluir_autor(autor, id_autor):
     return jsonify({'mensagem': 'Autor excluído com sucesso!'})
 
 
-app.run(port=5000, host='localhost', debug=True)
+if __name__ == '__main__':
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
