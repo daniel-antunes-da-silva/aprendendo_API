@@ -1,4 +1,3 @@
-
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
@@ -6,7 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 # Criar uma instância de SQLAlchemy
 app.config['SECRET_KEY'] = 'abcdef123456'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:k0xYDsIwN2dS8s3xIPW1@containers-us-west-50.railway.app:6808/railway'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+
 
 
 db = SQLAlchemy(app)
@@ -36,6 +36,7 @@ class Autor(db.Model):
     senha = db.Column(db.String)
     admin = db.Column(db.Boolean)
     postagens = db.relationship('Postagem')
+
 
 def inicializar_banco():
     with app.app_context():

@@ -9,13 +9,15 @@ import jwt
 # Criando token para sempre que precisar proteger alguma requisição.
 # Para isso, basta colocar o @token_obrigatorio debaixo das rotas que queremos proteger.
 # É necessário, também, colocar o parâmetro (nesse caso, autor) como primário nas funções que protegemos.
+
+
 def token_obrigatorio(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
         # Verificar se um token foi enviado
-        if 'x-acess-token' in request.headers:
-            token = request.headers['x-acess-token']
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
         if not token:
             return jsonify({'mensagem': 'token não foi incluído'}, 401)
         # Se temos um token, validar acesso consultando o BD.
@@ -26,6 +28,7 @@ def token_obrigatorio(f):
             return jsonify({'mensagem': 'token é invalido'}, 401)
         return f(autor, *args, *kwargs)
     return decorated
+
 
 @app.route('/login')
 def login():
